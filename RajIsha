@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine's Day</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      background-color: white;
+      color: #FF1493; /* Dark pink font color */
+      position: relative; /* For positioning the home button */
+    }
+
+    .container {
+      max-width: 800px; /* Increased width for more text per line */
+      margin: auto;
+    }
+
+    h1 {
+      font-size: 1.5rem; /* Reduced font size for compactness */
+      margin-bottom: 20px;
+      color: #FF1493; /* Ensure headings are dark pink */
+      line-height: 1.2; /* Reduced line height for compactness */
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    .options {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .option-button {
+      background-color: #FF1493; /* Dark pink background for buttons */
+      color: white; /* White text for buttons */
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .option-button:hover {
+      background-color: #FF69B4; /* Slightly brighter pink on hover */
+    }
+
+    .screen5 {
+      background-color: black;
+      color: red; /* Red font color for Screen 5 */
+    }
+
+    .screen5 a {
+      color: red; /* Ensure "Click here to know more" is red */
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .circle-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .circle {
+      width: 150px !important; /* Increased circle size */
+      height: 150px !important; /* Increased circle size */
+      border-radius: 50%;
+      background-size: cover;
+      background-position: center;
+      filter: blur(2px);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .circle:hover {
+      transform: scale(1.1);
+      filter: blur(0);
+    }
+
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .popup img {
+      width: 48vw; /* Further reduced width for GIFs (60vw - 20%) */
+      max-width: 400px; /* Limit maximum width */
+      height: auto; /* Maintain aspect ratio */
+      margin-bottom: 10px;
+    }
+
+    .popup-message {
+      color: #FF1493; /* Dark pink font color for popup messages */
+      font-size: 1.5rem; /* Keep font size unchanged */
+      margin-top: 10px;
+      max-width: 80%; /* Expand the virtual text box */
+      line-height: 1.5; /* Improve readability */
+      text-align: center; /* Center-align the text */
+    }
+
+    .popup-images {
+      display: flex;
+      gap: 10px; /* Add spacing between the two GIFs */
+    }
+
+    /* Home Button (Heart Icon) */
+    .home-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 2rem;
+      color: #FF1493;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .home-button:hover {
+      color: #FF69B4; /* Brighter pink on hover */
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <!-- Home Button -->
+  <a href="#" class="home-button" onclick="renderScreen(1)">❤️</a>
+
+  <script>
+    const screens = [
+      {
+        id: 1,
+        background: "white",
+        gif: "https://media.tenor.com/p_VEcmrBsLMAAAAi/manja.gif",
+        message: "Hey Raj, will you be my Valentine?",
+        options: [
+          { text: "Yes - Without a doubt, forever and always! ❤", nextScreen: 5 },
+          { text: "No - I love chaos 😝", nextScreen: 2 }
+        ]
+      },
+      {
+        id: 2,
+        background: "white",
+        gif: "https://media.tenor.com/iOyC50Mn8-QAAAAj/peach-goma-peach-and-goma.gif",
+        message: "Ughhh, you had to click ‘No,’ didn’t you? I know you're just messing with me, right?!",
+        options: [
+          { text: "Yes, I was just kidding 😊 I will be your Valentine", nextScreen: 5 },
+          { text: "Nope, I am serious 😶", nextScreen: 3 }
+        ]
+      },
+      {
+        id: 3,
+        background: "white",
+        gif: "https://media.tenor.com/SlGI-hfJekAAAAAj/tkthao219-peach.gif",
+        message: "I can never recover from this 😭 But, I’ll forgive you - ONLY if you click ‘Yes’ right now. 😤",
+        options: [
+          { text: "I choose “Yes” 🥰", nextScreen: 5 },
+          { text: "Nope 🥱", nextScreen: 4 }
+        ]
+      },
+      {
+        id: 4,
+        background: "white",
+        gif: "https://media1.tenor.com/m/-qLnTOt0uWsAAAAd/miss-may-lets-go.gif",
+        message: "",
+        options: [
+          { text: "Yay 🤩", nextScreen: 5 },
+          { text: "No 😭🥺", nextScreen: 5 }
+        ]
+      },
+      {
+        id: 5,
+        background: "black",
+        gif: "https://media.tenor.com/lg2ehBepeAAAAAAM/peach-goma.gif",
+        message: "You’re Officially -\n\n1. MBU – My Best in the Universe\n2. GOAL: Greatest of all Loves\n3. MVP: Most Valuable Partner! (in the entire Universe!)\n.\n.\n.\n.",
+        options: [
+          { text: "Click here to know more", nextScreen: 6 }
+        ]
+      },
+      {
+        id: 6,
+        background: "white",
+        gif: "",
+        message: "No amount of words or sentences can truly describe how much you mean to me. Language falls short, but love speaks in memories - here are some of ours.",
+        circles: [
+          {
+            gif: "https://media.tenor.com/bgfHC4fV7a8AAAAM/goma-peach.gif",
+            message: "Cooking together - where laughter is the main course 🥰"
+          },
+          {
+            gif: "https://media.tenor.com/rzjB67dOHj8AAAAM/peach-and-goma.gif",
+            message: "A table by the sea, where the sunset melted into the waves at Vilamoura Beach, Algarve 🌊🌇"
+          },
+          {
+            gif: "https://media.tenor.com/L0pNsP12XHYAAAAj/khofar-me-and-melissa.gif",
+            message: "Late-night swings, full stomachs, and carefree laughter - our kind of adventure 🌙💙"
+          },
+          {
+            gif: "https://media.tenor.com/kAcle5BuQI4AAAAM/peach-and-goma.gif",
+            message: "From first bites to countless plates - momos have become our thing 🤍🥟"
+          },
+          {
+            gif: "https://media.tenor.com/8nDPgFamonAAAAAM/goma-typing-goma-cat-typing.gif",
+            gif2: "https://media.tenor.com/P95xHKVji_cAAAAM/peach-goma.gif",
+            message: "Third-wheeling in my own relationship with his gaming PC 🖥️🙃"
+          },
+          {
+            gif: "https://media.tenor.com/UzJ4Bm8lgZUAAAAM/peach-cat-peach-goma.gif",
+            message: "Rub, giggle, repeat - our little ritual - 💕✨"
+          }
+        ]
+      }
+    ];
+
+    let currentScreen = 1;
+
+    function renderScreen(screenId) {
+      const screen = screens.find(s => s.id === screenId);
+      const app = document.getElementById("app");
+      app.innerHTML = "";
+
+      document.body.style.backgroundColor = screen.background;
+
+      // Apply specific font color for Screen 5
+      if (screen.id === 5) {
+        document.body.classList.add("screen5");
+      } else {
+        document.body.classList.remove("screen5");
+      }
+
+      const container = document.createElement("div");
+      container.className = "container";
+
+      if (screen.gif) {
+        const img = document.createElement("img");
+        img.src = screen.gif;
+        container.appendChild(img);
+      }
+
+      if (screen.message) {
+        const message = document.createElement("h1");
+        message.innerHTML = screen.message.replace(/\n/g, "<br>"); // Replace newlines with <br> tags
+        container.appendChild(message);
+      }
+
+      if (screen.options) {
+        const optionsDiv = document.createElement("div");
+        optionsDiv.className = "options";
+
+        screen.options.forEach(option => {
+          const button = document.createElement("button");
+          button.className = "option-button";
+          button.textContent = option.text;
+          button.onclick = () => renderScreen(option.nextScreen);
+          optionsDiv.appendChild(button);
+        });
+
+        container.appendChild(optionsDiv);
+      }
+
+      if (screen.circles) {
+        const circleContainer = document.createElement("div");
+        circleContainer.className = "circle-container";
+
+        screen.circles.forEach(circle => {
+          const circleDiv = document.createElement("div");
+          circleDiv.className = "circle";
+          circleDiv.style.backgroundImage = `url(${circle.gif})`;
+          circleDiv.onclick = () => showPopup(circle);
+
+          circleContainer.appendChild(circleDiv);
+        });
+
+        container.appendChild(circleContainer);
+      }
+
+      app.appendChild(container);
+    }
+
+    function showPopup(circle) {
+      const popup = document.createElement("div");
+      popup.className = "popup";
+
+      if (circle.gif && !circle.gif2) {
+        const img = document.createElement("img");
+        img.src = circle.gif;
+        popup.appendChild(img);
+      } else if (circle.gif && circle.gif2) {
+        const imagesContainer = document.createElement("div");
+        imagesContainer.className = "popup-images";
+
+        const img1 = document.createElement("img");
+        img1.src = circle.gif;
+        imagesContainer.appendChild(img1);
+
+        const img2 = document.createElement("img");
+        img2.src = circle.gif2;
+        imagesContainer.appendChild(img2);
+
+        popup.appendChild(imagesContainer);
+      }
+
+      const message = document.createElement("div");
+      message.className = "popup-message";
+      message.textContent = circle.message;
+      popup.appendChild(message);
+
+      document.body.appendChild(popup);
+
+      popup.onclick = () => popup.remove();
+    }
+
+    renderScreen(currentScreen);
+  </script>
+</body>
+</html>
